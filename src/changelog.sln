@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "changelog", "changelog\changelog.csproj", "{DA97E02A-F30E-41EA-BCBC-AFFE5E1C5216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "changelog.tests", "changelog.tests\changelog.tests.csproj", "{979EFB82-5707-4F33-86D5-FFF2C941A801}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA97E02A-F30E-41EA-BCBC-AFFE5E1C5216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA97E02A-F30E-41EA-BCBC-AFFE5E1C5216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA97E02A-F30E-41EA-BCBC-AFFE5E1C5216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA97E02A-F30E-41EA-BCBC-AFFE5E1C5216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{979EFB82-5707-4F33-86D5-FFF2C941A801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979EFB82-5707-4F33-86D5-FFF2C941A801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979EFB82-5707-4F33-86D5-FFF2C941A801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979EFB82-5707-4F33-86D5-FFF2C941A801}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
