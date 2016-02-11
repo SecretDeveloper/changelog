@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CliParse</name>
+    </assembly>
+    <members>
+        <member name="T:CliParse.ParsableArgumentAttribute">
+            <summary>
+            Properties that should be populated during the CliParse() process should have this attribute.
+            </summary>
+        </member>
+        <member name="F:CliParse.ParsableArgumentAttribute.DefaultTemplate">
+            <summary>
+            The default template used when building help screens.
+            </summary>
+        </member>
+        <member name="M:CliParse.ParsableArgumentAttribute.#ctor(System.String)">
+            <summary>
+            ParsableArgumentAttribute
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:CliParse.ParsableArgumentAttribute.GetSyntax(System.String,System.String)">
+            <summary>
+            Returns a string containing syntax help information for this property.
+            </summary>
+            <param name="template"></param>
+            <param name="prefix"></param>
+            <returns></returns>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.ImpliedPosition">
+            <summary>
+            Argument values supplied without a name can be determined by their position
+            An ImpliedPosition of 1 means the value can be supplied as the first parameter.
+            An ImpliedPosition of -1 means the value can be supplied as the last parameter.
+            The default value is 0 which means ImpliedPosition is not used.
+            </summary>
+            <example>
+            An argument named 'param1' with ImpliedPosition 1 can be provided as
+            "--param1 value" or "value"
+            </example>
+            <example>
+            An argument named 'param1' with ImpliedPosition -1 can be provided as
+            "otherParam 'otherParamValue' --param1 value" or "otherParam 'otherParamValue' value"
+            </example>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.Name">
+            <summary>
+            The longer name of the argument, supplied in the commandline using double prefix characters e.g. --param1 value.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.ShortName">
+            <summary>
+            The single character name of the argument, supplied in the commandline using a single prefix character e.g. -p value.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.DefaultValue">
+            <summary>
+            The default value to use when the argument is not supplied. Cannot be used when 'Required' is true.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.Required">
+            <summary>
+            Represents whether the argument must be supplied and returns a failure parse result if it was not found.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.Description">
+            <summary>
+            The description of what the argument represents.  This is used when building the argument help content.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableArgumentAttribute.Example">
+            <summary>
+            The example instructions of how an argument can be supplied.  This is used when building the argument help content.
+            </summary>
+        </member>
+        <member name="T:CliParse.CliParseException">
+            <summary>
+            Exception which can be thrown during the CliParse() process.
+            </summary>
+        </member>
+        <member name="M:CliParse.CliParseException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:CliParse.CliParseException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CliParse.CliParseException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:CliParse.CliParseException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:CliParse.CliParseResult">
+            <summary>
+            Result object returned from the CliParse() process which includes results and any error messages.
+            </summary>
+        </member>
+        <member name="M:CliParse.CliParseResult.#ctor">
+            <summary>
+            Creates a new CliParseResult object.
+            </summary>
+        </member>
+        <member name="M:CliParse.CliParseResult.AddErrorMessage(System.String)">
+            <summary>
+            Adds an error message to the CliParseMessages list and sets the Successful flag to false.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:CliParse.CliParseResult.AddMessageFromException(System.Exception)">
+            <summary>
+            Adds an error message containing the exception details to the CliParseMessages list and sets the Successful flag to false.
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="P:CliParse.CliParseResult.Successful">
+            <summary>
+            Represents whether the CliParse() process was successful.
+            </summary>
+        </member>
+        <member name="P:CliParse.CliParseResult.ShowHelp">
+            <summary>
+            Represents whether the provided arguments indicate that the Help content should be shown.
+            </summary>
+        </member>
+        <member name="P:CliParse.CliParseResult.CliParseMessages">
+            <summary>
+            Error messages
+            </summary>
+        </member>
+        <member name="T:CliParse.InfoBuilder">
+            <summary>
+            Information content builder for help screens.
+            </summary>
+        </member>
+        <member name="M:CliParse.InfoBuilder.GetHelpInfoFromAssembly(CliParse.Parsable,System.Reflection.Assembly,System.String,System.String,System.Int32)">
+            <summary>
+            Returns help content derived from the provided assembly and parsable object.
+            </summary>
+            <param name="parsable"></param>
+            <param name="asm"></param>
+            <param name="template"></param>
+            <param name="argumentTemplate"></param>
+            <param name="maxLineLength">The maximum number of characters in a line before it is wrapped</param>
+            <returns></returns>
+        </member>
+        <member name="M:CliParse.InfoBuilder.GetHelpInfo(CliParse.Parsable,System.String,System.String,System.Int32)">
+            <summary>
+            Returns help content derived from the provided parsable object.
+            </summary>
+            <param name="parsable"></param>
+            <param name="template"></param>
+            <param name="argumentTemplate"></param>
+            <param name="maxLineLength">The maximum number of characters in a line before it is wrapped</param>
+            <returns></returns>
+        </member>
+        <member name="F:CliParse.Parsable.DefaultTemplate">
+            <summary>
+            The default template to use when creating help screens.
+            </summary>
+        </member>
+        <member name="M:CliParse.Parsable.PreParse(System.Collections.Generic.IEnumerable{System.String},CliParse.CliParseResult)">
+            <summary>
+            Executes before any parsing is performed.
+            </summary>
+            <param name="args"></param>
+            <param name="result"></param>
+        </member>
+        <member name="M:CliParse.Parsable.PostParse(System.Collections.Generic.IEnumerable{System.String},CliParse.CliParseResult)">
+            <summary>
+            Executes after parsing has been performed.
+            </summary>
+            <param name="args"></param>
+            <param name="result"></param>
+        </member>
+        <member name="M:CliParse.ParsableClassAttribute.#ctor(System.String)">
+            <summary>
+            A parsable class attribute.
+            </summary>
+            <param name="title">The title used for help content</param>
+        </member>
+        <member name="M:CliParse.ParsableClassAttribute.#ctor(System.String,System.String)">
+            <summary>
+            A parsable class attribute.
+            </summary>
+            <param name="title">The title used for help content</param>
+            <param name="description">The description used for help content</param>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.Title">
+            <summary>
+            The Title that will be displayed on help screens.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.Description">
+            <summary>
+            A description that will be displayed on help screens.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.Version">
+            <summary>
+            The applications current version.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.Copyright">
+            <summary>
+            The applications copyright statement.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.ExampleText">
+            <summary>
+            Example content that will be included on help screens.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.FooterText">
+            <summary>
+            Footer content that will be included on help screens.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.AllowedPrefixes">
+            <summary>
+            The allowed parameter prefix characters. Default is '-' and '/'.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.ShowHelpParameters">
+            <summary>
+            A list of the parameter values which will set ShowHelp to true if they are provided. Default is "help" and '?'.
+            </summary>
+        </member>
+        <member name="P:CliParse.ParsableClassAttribute.ShowHelpWhenNoArgumentsProvided">
+            <summary>
+            Determines whether ShowHelp is set to true when no arguments are provided.
+            Default is true.
+            </summary>
+        </member>
+        <member name="M:CliParse.ParsableExtensions.CliParse(CliParse.Parsable,System.String[])">
+            <summary>
+            Parses the provided args collection and uses its values to set 
+            the appropriate properties on the parsable object.
+            </summary>
+            <param name="parsable"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CliParse.ParsableExtensions.GetHelpInfo(CliParse.Parsable,System.String,System.String)">
+            <summary>
+            Builds a help information string which contains descriptions 
+            and details of the properties on the parsable object using 
+            values from its ParsableClass and ParsableArgument attributes.
+            </summary>
+            <param name="parsable"></param>
+            <param name="template"></param>
+            <param name="argumentTemplate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CliParse.ParsableExtensions.GetHelpInfoFromAssembly(CliParse.Parsable,System.Reflection.Assembly,System.String,System.String)">
+            <summary>
+            Builds a help information string which contains descriptions 
+            and details of the properties on the parsable object using 
+            values from its ParsableArgument attributes and from the 
+            provided assemblies attributes.
+            </summary>
+            <param name="parsable"></param>
+            <param name="asm"></param>
+            <param name="template">The template to use when building the help string.</param>
+            <param name="argumentTemplate">The argument template to use when building the help string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CliParse.Parser.Parse(CliParse.Parsable,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Parses the provided args collection and uses its values to set the appropriate properties on the parsable object.
+            </summary>
+            <param name="parsable"></param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:CliParse.TokenType">
+            <summary>
+            The types of tokens that can be provided.
+            </summary>
+        </member>
+        <member name="F:CliParse.TokenType.Field">
+            <summary>
+            Named field arguments
+            </summary>
+        </member>
+        <member name="F:CliParse.TokenType.Value">
+            <summary>
+            Value arguments
+            </summary>
+        </member>
+        <member name="T:CliParse.Token">
+            <summary>
+            Represents a single argument item.
+            </summary>
+        </member>
+        <member name="M:CliParse.Token.#ctor">
+            <summary>
+            Returns a new Token object.
+            </summary>
+        </member>
+        <member name="P:CliParse.Token.Index">
+            <summary>
+            The original index of the argument.
+            </summary>
+        </member>
+        <member name="P:CliParse.Token.Type">
+            <summary>
+            Token type.
+            </summary>
+        </member>
+        <member name="P:CliParse.Token.Value">
+            <summary>
+            The arguments value, if provided.
+            </summary>
+        </member>
+        <member name="P:CliParse.Token.Taken">
+            <summary>
+            Whether this token has been accounted for during the CliParse() process.
+            </summary>
+        </member>
+        <member name="T:CliParse.Tokenizer">
+            <summary>
+            Simple argument tokenizer class that can seperate and define an argument string into a collection of Token objects.
+            </summary>
+        </member>
+        <member name="M:CliParse.Tokenizer.Tokenize(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.ICollection{System.Char})">
+            <summary>
+            Converts a collection of arguments into a collection of defined Tokens.
+            </summary>
+            <param name="args">The arguments received from the command line.</param>
+            <param name="allowedPrefixes">The prefixes used to identify named arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CliParse.NativeMethods.CommandLineToArgs(System.String)">
+            <summary>
+            Uses the standard windows 
+            </summary>
+            <param name="commandLine"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

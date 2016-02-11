@@ -121,7 +121,8 @@
     <value>Change Log</value>
   </data>
   <data name="mk_entry_comment" xml:space="preserve">
-    <value>- {0}</value>
+    <value>- {0}
+</value>
   </data>
   <data name="mk_entry_section" xml:space="preserve">
     <value>### {entry_type}
@@ -135,6 +136,7 @@
     <value># {changelog}
 {subtitle}
 {semver_comment}
+---------------------------
 </value>
   </data>
   <data name="prompt_createfile" xml:space="preserve">
@@ -154,21 +156,5 @@
   </data>
   <data name="subtitle" xml:space="preserve">
     <value>All notable changes to this project will be documented in this file.</value>
-  </data>
-  <data name="txt_entry_comment" xml:space="preserve">
-    <value>- {0}</value>
-  </data>
-  <data name="txt_entry_section" xml:space="preserve">
-    <value>{entry_type}
-{entry_comments}</value>
-  </data>
-  <data name="txt_entry_template" xml:space="preserve">
-    <value>{version} - {date}</value>
-  </data>
-  <data name="txt_template" xml:space="preserve">
-    <value>{changelog}
-{subtitle}
-{semver_comment}
-</value>
   </data>
 </root>

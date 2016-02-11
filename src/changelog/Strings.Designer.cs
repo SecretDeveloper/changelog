@@ -70,7 +70,8 @@ namespace changelog {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to - {0}.
+        ///   Looks up a localized string similar to - {0}
+        ///.
         /// </summary>
         internal static string mk_entry_comment {
             get {
@@ -102,6 +103,7 @@ namespace changelog {
         ///   Looks up a localized string similar to # {changelog}
         ///{subtitle}
         ///{semver_comment}
+        ///---------------------------
         ///.
         /// </summary>
         internal static string mk_template {
@@ -161,46 +163,6 @@ namespace changelog {
         internal static string subtitle {
             get {
                 return ResourceManager.GetString("subtitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to - {0}.
-        /// </summary>
-        internal static string txt_entry_comment {
-            get {
-                return ResourceManager.GetString("txt_entry_comment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {entry_type}
-        ///{entry_comments}.
-        /// </summary>
-        internal static string txt_entry_section {
-            get {
-                return ResourceManager.GetString("txt_entry_section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {version} - {date}.
-        /// </summary>
-        internal static string txt_entry_template {
-            get {
-                return ResourceManager.GetString("txt_entry_template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {changelog}
-        ///{subtitle}
-        ///{semver_comment}
-        ///.
-        /// </summary>
-        internal static string txt_template {
-            get {
-                return ResourceManager.GetString("txt_template", resourceCulture);
             }
         }
     }

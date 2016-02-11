@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>changelog</id>
+    <version>$version$</version>
+    <title>changelog</title>
+    <authors>Gary Kenneally (@SecretDeveloper)</authors>
+    <owners>Gary Kenneally (@SecretDeveloper)</owners>
+    <licenseUrl>https://github.com/SecretDeveloper/changelog/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SecretDeveloper/changelog/</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A command line changelog management application</description>    
+    <copyright>Copyright 2016</copyright>
+    <tags>CommandLine Parse .net command line changelog</tags>
+    <dependencies>
+      <dependency id="CliParse" version="0.4.2.0" />    
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\BuildOutput\changelog.exe" target="lib"/>
+    <file src="..\..\BuildOutput\changelog.exe.config" target="lib"/>    
+  </files>  
+</package>

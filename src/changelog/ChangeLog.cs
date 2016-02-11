@@ -3,30 +3,26 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace changelog
 {
-    class Program
+    class ChangeLog
     {
         public Dictionary<string, string> _SupportedFormats = new Dictionary<string, string>()
         {
-            {"markdown", "mk"},
-            {"text", "txt"}
+            {"markdown", "mk"}
         };
         
         static void Main(string[] args)
         {
-
+            var currentPath = Directory.GetCurrentDirectory();
 #if DEBUG
             Debugger.Launch();
+            currentPath = "c:\\Temp";
 #endif
+            
 
-
-            var currentPath = Directory.GetCurrentDirectory();
             // Find current changelog file
             string changelogPath = Directory.GetFiles(currentPath)
                 .FirstOrDefault(
@@ -46,7 +42,7 @@ namespace changelog
                 // create file or exit    
                 if (input.Equals("Y", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    changelogPath = CreateNewChanglog(currentPath);
+                    changelogPath = CreateChangelogFile(currentPath);
                 }
                 else
                     return;
@@ -60,39 +56,37 @@ namespace changelog
 
         private static bool isMarkdown(string changelogPath)
         {
-            // about as naive as you can get right now.
-            var extension = Path.GetExtension(changelogPath)??"";
-            if (extension.Equals(".txt", StringComparison.CurrentCultureIgnoreCase)) return false;
-
+            // only supporting MK now
             return true;
         }
 
         private static void AppendEntryToChangeLog(string changelogPath, string entry)
         {
-            Console.WriteLine(entry);
+            var content = File.ReadAllText(changelogPath);
+            var ne = "---------------------------\r\n" + entry;
+            File.WriteAllText(changelogPath, content.Replace("---------------------------\r\n", ne));
         }
 
         private static string CreateChangeLogEntry(bool isMarkdown)
         {
-            string ret = Strings.mk_entry_template;
             string entryTemplate = Strings.mk_entry_template;
-            string commentTemplate = Strings.mk_entry_comment;
-            if (!isMarkdown)
-            {
-                ret = Strings.txt_entry_template;
-                entryTemplate = Strings.txt_entry_template;
-                commentTemplate = Strings.txt_entry_comment;
-            }
+            string entrySectionTemplate = Strings.mk_entry_section; 
+            string entryCommentTemplate = Strings.mk_entry_comment;
 
             var version = PromptForString("What is the version number for this entry?");
             entryTemplate = entryTemplate.Replace("{version}", "["+version+"]");
 
             entryTemplate = entryTemplate.Replace("{date}", DateTime.Now.ToString("yyyy-MMM-dd"));
 
-            var input = RepeatPromptForString(String.Format(Strings.prompt_entry_template, "[ADDED]"), commentTemplate.Replace("{entry_type}", "[ADDED]"));
-            input += RepeatPromptForString(String.Format(Strings.prompt_entry_template, "[CHANGED]"), commentTemplate.Replace("{entry_type}", "[CHANGED]"));
+            var input = RepeatPromptForString(String.Format(Strings.prompt_entry_template, "[ADDED]"), entryCommentTemplate);
+            var section = entrySectionTemplate.Replace("{entry_type}", "[ADDED]").Replace("{entry_comments}", input);
+            section += "\r\n";
+            input = "";
+            input += RepeatPromptForString(String.Format(Strings.prompt_entry_template, "[CHANGED]"), entryCommentTemplate);
+            section += entrySectionTemplate.Replace("{entry_type}", "[CHANGED]").Replace("{entry_comments}", input);
+            section += "\r\n";
 
-            return entryTemplate.Replace("{entry_comments}", input);
+            return entryTemplate.Replace("{entry_section}", section);
         }
 
         private static string RepeatPromptForString(string prompt, string template)
@@ -101,13 +95,13 @@ namespace changelog
             var input = "";
 
             var tmp = Console.ReadLine();
-            while (tmp.Length > 0)
+            while (tmp.Trim().Length > 0)
             {
+                input += string.Format(template, tmp);
                 tmp = Console.ReadLine();
-                input += Environment.NewLine + string.Format(template, tmp);
             }
             
-            return input;
+            return input.Trim();
         }
 
         private static string PromptForString(string prompt, string defaultValue="")
@@ -117,26 +111,14 @@ namespace changelog
             return string.IsNullOrEmpty(input) ? defaultValue : input;
         }
 
-        private static string CreateNewChanglog(string path)
+        private static string CreateChangelogFile(string path)
         {
-
             var changelogPath = Path.Combine(path, "changelog");
 
-            Console.Write(Strings.prompt_filetype);
-            var input = ReadKeyFromConsole();
+            var input = PromptForInput(Strings.prompt_createfile, "Y");
             var template = Strings.mk_template;
-            if (input.Equals("T", StringComparison.CurrentCultureIgnoreCase))
-            {
-                template = Strings.txt_template;
-                changelogPath += ".txt";
-            }
-            else
-            {
-                changelogPath += ".md";
-            }
 
-            Console.Write(Strings.prompt_semver_support);
-            input = ReadKeyFromConsole();
+            input = PromptForInput(Strings.prompt_semver_support);
             if (input.Equals("N", StringComparison.CurrentCultureIgnoreCase))
                 template = template.Replace("{semver_comment}", ""); // remove Semver line.
 
@@ -152,6 +134,30 @@ namespace changelog
             // write to disk.
             File.WriteAllText(changelogPath, template);
             return changelogPath; 
+        }
+
+        private static string PromptForKeyInput(string prompt, string defaultValue = null)
+        {
+            var t = prompt;
+            if (defaultValue != null) t = t + "(" + defaultValue + ")";
+
+            Console.Write(t);
+
+            var input = ReadKeyFromConsole();
+            if (string.IsNullOrEmpty(input)) input = defaultValue;
+            return input;
+        }
+
+        private static string PromptForInput(string prompt, string defaultValue = null)
+        {
+            var t = prompt;
+            if (defaultValue != null) t = t + "(" + defaultValue + ")";
+
+            Console.Write(t);
+
+            var input = ReadKeyFromConsole();
+            if (string.IsNullOrEmpty(input)) input = defaultValue;
+            return input;
         }
 
         private static string ReadKeyFromConsole()
